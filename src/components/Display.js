@@ -6,7 +6,7 @@ export default function Display(props) {
       var recData = [];
       console.log("props",props.uData);
 
-    })
+    },[])
     return (
         // <div>
              <tbody>

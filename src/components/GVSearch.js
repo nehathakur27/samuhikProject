@@ -16,25 +16,7 @@ const GVSearch = (props) => {
             navigate("/");
           }
           loadGaadis()
-    });
-
-    const callback = () =>{
-        console.log("calling back");
-        props.parentCallback(usersData,recData)
-    }
-    useEffect(() => {
-        console.log("ud ",usersData);
-        console.log("rec ",recData);
-        // console.log("ud len",usersData.length);
-        //  console.log("rec len",recData.length);
-        if(usersData.length > 0 && recData.length > 0)
-           {
-                console.log("callback userdata  ",usersData);
-                console.log("callback recData",recData);    
-                props.parentCallback(usersData,recData)
-            }
-    }, [usersData,recData])
-
+    },[]);
     
 
     const loadGaadis = async() =>{
@@ -65,15 +47,24 @@ const GVSearch = (props) => {
        
     }
 
-    // const merge = (a1,a2) =>{
-    //     console.log("merging data...");
-    //     console.log(a1);
-    //     console.log(a2);
-    //     let mergedList = a2.map((item, i) => Object.assign({}, item, a1[i]));
-    //     props.setSt2(mergedList)
-    //     console.log("merged list: ",mergedList);
-    // }
+    const mergeData = () =>{
+        // console.log("ud ",usersData);
+        // console.log("rec ",recData);
+        // console.log("ud len",usersData.length);
+        //  console.log("rec len",recData.length);
+        if(usersData.length > 0 && recData.length > 0)
+           {
+                console.log("callback userdata",usersData);
+                console.log("callback recData",recData);    
+                props.parentCallback(usersData,recData)
+            }else if( usersData.length === 0 || recData.length === 0){
+                props.parentCallback(usersData,recData)
+                alert("No data found")
 
+            }
+    }
+
+   
     const searchForm = useFormik({
         initialValues:{
           gname:"",
@@ -83,6 +74,29 @@ const GVSearch = (props) => {
             console.log(values);
             if(values.gname.length > 0 && values.vname.length > 0){
                 const query = firestore.collection("entries").where("gname","==",values.gname) .where("vname","==",values.vname) 
+                const exeQuery = await query.get();
+                let userData = []
+                let ids = []
+                let recieptData = []
+
+                for(const doc of exeQuery.docs){
+                    userData.push(doc.data())
+                    ids.push(doc.id);
+                }
+                setUserData(userData)
+                ids.forEach(async (id) => {
+                    const getData = firestore.collection("all_receipts").where("uid" ,"==",id)
+                    const exeGetData = await getData.get()
+                   for(const d of exeGetData.docs){
+                        recieptData.push(d.data())
+                    }
+                    setRecData(recieptData)
+                })    
+                 
+            mergeData() 
+
+            }else if(values.gname.length > 0  && values.vname.length === 0){
+                const query = firestore.collection("entries").where("gname","==",values.gname)
                 const exeQuery = await query.get();
                 var userData = []
                 var ids = []
@@ -95,60 +109,15 @@ const GVSearch = (props) => {
                 console.log(userData);
                 setUserData(userData)
                 ids.forEach(async (id) => {
-                    //console.log(id);
                     const getData = firestore.collection("all_receipts").where("uid" ,"==",id)
-                    // console.log("query data",getData);
                     const exeGetData = await getData.get()
-                    // console.log("current queryData:",getData);
-                     //console.log("executed query..",exeGetData);
                     exeGetData.forEach((d) => {
-                        // console.log("d.data() = ",d.data());
-                        // console.log("push data...");
-                        // let obj = d.data()
-                        // console.log(obj);
                          recieptData.push(d.data())
                     })
-                    
-                    // console.log("recData: ",JSON.stringify(recieptData));
                     setRecData(recieptData)
-                })                
-
-            }else if(values.gname.length > 0  && values.vname.length === 0){
-                firestore
-                    .collection("entries")
-                    .where("gname","==",values.gname)
-                    .get()
-                    .then(function (deets){
-                        // console.log(deets.docs);
-                        if(deets.empty)
-                            {alert("No data found");//props.setSt1([])
-                            }
-                        else{
-                            let userData = []
-                            let ids = []
-                            deets.docs.map((v) => {
-                                userData.push(v.data())
-                                ids.push(v.id)
-                            })
-                            console.log("userData for gname ...",userData);
-                            let recieptData = []
-                            ids.forEach((id) => {
-                                firestore
-                                    .collection("all_receipts")
-                                    .where("uid" ,"==",id)
-                                    .get()
-                                    .then(function (d) {
-                                        d.docs.map((val) => {
-                                            recieptData.push(val.data())
-                                        })
-                                    })
-                            })
-                            console.log("rec data",recieptData);
-                            setRecData(recieptData)
-                            setUserData(userData)
-                            //props.parentCallback(userData,recieptData)
-                        }
-                    })
+                })    
+                 
+                mergeData()
             }
         }
     })

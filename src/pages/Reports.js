@@ -9,50 +9,61 @@ import _ from 'underscore'
 const Reports = () =>{
     const [type,setType] = useState('');
     const [finalData,setFinalData] = useState([]);
-    const [keys,setKeys] = useState(0);
 
     useEffect( () => {
         if (localStorage.getItem("logged") !== "true") {
             navigate("/");
           }
-    });
+    },[]);
+    
 
     const handleChange = (event) =>{
         setType(event.target.value)
     }
 
 
-    const getFData = () => {
-        console.log("here",finalData);
-        finalData.map((val,i) => {
-            //console.log(typeof val);
-            let ind = 0;
-            if(typeof val[ind] === "object"){
-                Object.entries(val[ind]).map(([key, value]) => {
+    // const getFData = () => {
+    //     console.log("here",finalData);
+    //     finalData.map((val,i) => {
+    //         //console.log(typeof val);
+    //         let ind = 0;
+    //         if(typeof val[ind] === "object"){
+    //             Object.entries(val[ind]).map(([key, value]) => {
                   
-                    ind++;
-                })
-                setKeys(ind)
-            }
+    //                 ind++;
+    //             })
+    //             setKeys(ind)
+    //         }
             
-        })
-    }
+    //     })
+    // }
+
     
 
     const handleCallback = (s1,s2) =>{
         console.log("rec s1",s1);
         console.log("rec s2",s2);
         console.log("merging...");
-        if(s1 && s2){   
-            var mergedList = _.map(s1, function(item){
-                console.log(item.uid);
-                 return _.extend(item, _.where(s2, { uid: item.uid }));
-            });
-            setFinalData(mergedList)
-            console.log("mergedList: ",mergedList);
-            getFData()
+        var final = []
+        if(s1.length > 0 && s2.length > 0){
+            s2.map((val,i) => {
+                var data = {}
+                data = val;
+                var curId = val.uid
+                console.log("cur id",val.uid);
+                s1.map((v,j) => {
+                     if(v.uid === curId ){
+                        //  console.log("matched val",v);
+                        data = {...data,v}
+                     }
+                })
+                console.log("fdata",data);
+                final.push(data)
+            })
+            setFinalData(final)
         }else{
-            console.log("Error");
+            setFinalData(final)
+            // console.log("Error");
         }
     }
 
@@ -120,19 +131,19 @@ const Reports = () =>{
                                  <tbody>
                                  { finalData.map((val) => 
                                             <tr>
-                                                    <td>{val.name}</td>
-                                                    <td>{val.fname}</td>
-                                                    <td>{val.address}</td>
-                                                    <td>{val.vname}</td>
-                                                    <td>{val.gname}</td>
-                                                    <td>{val.mnno}</td>
-                                                    <td>{val.donation}</td>
-                                                    {/* <td>{val[i].type}</td>
-                                                    <td>{val[i].date}</td>
-                                                    <td>{val[i].amount}</td>
-                                                    {val[i].reciept_no  && <td>{val[i].reciept_no}</td>}
-                                                    {val[i].ntp  &&<td>{val[i].ntp}</td>}
-                                                    <td>{val[i].note}</td> */}
+                                                <td>{val.v.name}</td>
+                                                <td>{val.v.fname}</td>
+                                                <td>{val.v.address}</td>
+                                                <td>{val.v.vname}</td>
+                                                <td>{val.v.gname}</td>
+                                                <td>{val.v.mnno}</td>
+                                                <td>{val.donation}</td>
+                                                <td>{val.type}</td>
+                                                <td>{val.date}</td>
+                                                <td>{val.amount}</td>
+                                                {val.reciept_no  ?  <td>{val.reciept_no}</td> : <td>-</td>}
+                                                {val.ntp  ? <td>{val.ntp}</td> : <td>-</td>}
+                                                {val.note ? <td>{val.note}</td> : <td>-</td>}
                                             </tr>
                                  )}
                                  </tbody>

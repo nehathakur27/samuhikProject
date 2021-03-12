@@ -4,8 +4,10 @@ import { navigate } from "hookrouter";
 import { useFormik,} from "formik";
 
 const ProductSearch = (props) => {
-    const [searchRes, setSearchRes] = useState([]);
+    const [searched, setSearched] = useState(false);
     const [dtypes,setdTypes] = useState([])
+    const [usersData, setUserData] = useState([]);
+    const [recData, setRecData] = useState([]);
     // console.log(props);
 
     useEffect( () => {
@@ -13,7 +15,36 @@ const ProductSearch = (props) => {
             navigate("/");
           }
           loadDonation()
-    });
+    },[]);
+
+        // useEffect(() => {
+        //     console.log("ud ",usersData);
+        //     console.log("rec ",recData);
+        //     if(usersData.length > 0 && recData.length > 0)
+        //     {
+        //             console.log("callback userdata  ",usersData);
+        //             console.log("callback recData",recData);    
+        //             props.parentCallback(usersData,recData)
+        //     }else if(searched &&( usersData.length === 0 || recData.length === 0)){
+        //         alert("No data found")
+        //     }
+        // }, [usersData,recData])
+
+        const mergeData = () =>{
+            console.log("ud ",usersData);
+            console.log("rec ",recData);
+            // console.log("ud len",usersData.length);
+            //  console.log("rec len",recData.length);
+            if(usersData.length > 0 && recData.length > 0)
+               {
+                    console.log("callback userdata  ",usersData);
+                    console.log("callback recData",recData);    
+                    props.parentCallback(usersData,recData)
+                }else if(searched &&( usersData.length === 0 || recData.length === 0)){
+                    props.parentCallback(usersData,recData)
+                    alert("No data found")
+                }
+        }
 
     const loadDonation = async() =>{
         const document = firestore.collection("donation_type")
@@ -31,46 +62,29 @@ const ProductSearch = (props) => {
         initialValues:{
           pro:""
         },
-        onSubmit: (values) => {
-            console.log(values);
-            firestore
-                .collection("all_receipts")
-                .where("donation","==",values.pro)
-                .get()
-                .then(function (deets) {
-                    if(deets.empty){
-                        alert("no user found")
-                        //props.setSt1([])
-                    }else{
-                        let receiptData = []
-                        let ids = new Set()
-                        deets.docs.map((v) => {
-                            receiptData.push(v.data());
-                            ids.add(v.data().uid);
-                        })
-                        // console.log(ids);
-                        //props.setSt1(receiptData)
-                        console.log("rec data..",receiptData);
-                        
-                        let userData = []
-                        ids.forEach((id) =>{
-                            firestore
-                                .collection("entries")
-                                .where("uid","==",id)
-                                .get()
-                                .then(function (d) {
-                                    d.docs.map((val) => {
-                                        userData.push(val.data())
-                                    })
-                                })
-                        })
-                        //props.setSt2(userData)
-                        console.log("User data",userData);
-                        props.parentCallback(userData,receiptData)
-                    }
+        onSubmit: async(values) => {
+            // console.log(values);
+            const query = firestore.collection("all_receipts").where("donation","==",values.pro)
+            const exeQuery = await query.get()
+            var userData = []
+            var ids = []
+            var recieptData = []
+            exeQuery.forEach((d) => {
+                recieptData.push(d.data())
+                ids.push(d.data().uid);
+            })
+            console.log(recieptData);
+            setRecData(recieptData)
+            ids.forEach(async (id) => {
+                const getData = firestore.collection("entries").where("uid" ,"==",id)
+                const exeGetData = await getData.get()
+                exeGetData.forEach((d) => {
+                     userData.push(d.data())
                 })
-
-            
+                setUserData(userData)
+            })
+            setSearched(true)
+            mergeData()
         }
     })
 
