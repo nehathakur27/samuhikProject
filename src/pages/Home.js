@@ -14,7 +14,7 @@ export default function Home(){
     return(
         <div>
             <SideBar />
-            <div className="content-wrapper">
+            <div className="content-wrapper" >
             {/* Content Header (Page header) */}
             <div className="content-header">
                 <div className="container-fluid">
@@ -27,19 +27,14 @@ export default function Home(){
             </div>
             {/* /.content-header */}
             {/* Main content */}
-            <section className="content">
-                <div className="container-fluid">
+            <section className="content" >
+                <div className="container-fluid" >
                 {/* Info boxes */}
                 <div className="row">
-                    <div className="col-12 col-sm-6 col-md-3">
-                    <div className="info-box">
-                        <span className="info-box-icon bg-info elevation-1"><i className="fas fa-cog" /></span>
+                    <div className="col-12 col-sm-6 col-md-3" >
+                    <div className="info-box" onClick={() => navigate("/layout/"+"prerna")}>
                         <div className="info-box-content">
-                        <span className="info-box-text">CPU Traffic</span>
-                        <span className="info-box-number">
-                            10
-                            <small>%</small>
-                        </span>
+                        <span className="info-box-text" style={{textAlign:"center"}}>समाज के प्रेरणास्त्रोत</span>
                         </div>
                         {/* /.info-box-content */}
                     </div>
@@ -47,11 +42,9 @@ export default function Home(){
                     </div>
                     {/* /.col */}
                     <div className="col-12 col-sm-6 col-md-3">
-                    <div className="info-box mb-3">
-                        <span className="info-box-icon bg-danger elevation-1"><i className="fas fa-thumbs-up" /></span>
+                    <div className="info-box mb-3" onClick={() => navigate("/layout/"+"gourav")}>
                         <div className="info-box-content">
-                        <span className="info-box-text">Likes</span>
-                        <span className="info-box-number">41,410</span>
+                        <span className="info-box-text" style={{textAlign:"center"}}>समाज के गौरव</span>
                         </div>
                         {/* /.info-box-content */}
                     </div>
@@ -61,11 +54,25 @@ export default function Home(){
                     {/* fix for small devices only */}
                     <div className="clearfix hidden-md-up" />
                     <div className="col-12 col-sm-6 col-md-3">
-                    <div className="info-box mb-3">
-                        <span className="info-box-icon bg-success elevation-1"><i className="fas fa-shopping-cart" /></span>
+                    <div className="info-box mb-3" onClick={() => navigate("/layout/"+"maargdarshan")}>
                         <div className="info-box-content">
-                        <span className="info-box-text">Sales</span>
-                        <span className="info-box-number">760</span>
+                        <span className="info-box-text" style={{textAlign:"center"}}>समाज के मार्गदर्शक </span>
+                        </div>
+                        {/* /.info-box-content */}
+                    </div>
+                    {/* /.info-box */}
+                    </div>
+                    {/* /.col */}
+                    
+                    {/* /.col */}
+                </div>
+                
+                {/* /.row */}
+                <div className="row">
+                    <div className="col-12 col-sm-6 col-md-3">
+                    <div className="info-box" onClick={() => navigate("/layout/"+"sadsya")}>
+                        <div className="info-box-content">
+                        <span className="info-box-text" style={{textAlign:"center"}}>समाज की केंद्रीय समिति के सदस्य  </span>
                         </div>
                         {/* /.info-box-content */}
                     </div>
@@ -73,20 +80,96 @@ export default function Home(){
                     </div>
                     {/* /.col */}
                     <div className="col-12 col-sm-6 col-md-3">
-                    <div className="info-box mb-3">
-                        <span className="info-box-icon bg-warning elevation-1"><i className="fas fa-users" /></span>
+                    <div className="info-box mb-3" onClick={() => navigate("/layout/"+"skp")}>
                         <div className="info-box-content">
-                        <span className="info-box-text">New Members</span>
-                        <span className="info-box-number">2,000</span>
+                        <span className="info-box-text" style={{textAlign:"center"}}>समाज की केंद्रीय समिति के पदाधिकारी </span>
+                        </div>
+                        {/* /.info-box-content */}
+                    </div>
+                    {/* /.info-box */}
+                    </div>
+                    <div className="col-12 col-sm-6 col-md-3">
+                    <div className="info-box mb-3" onClick={() => navigate("/layout/"+"tkp")}>
+                        <div className="info-box-content">
+                        <span className="info-box-text" style={{textAlign:"center"}}>समाज के ट्रस्ट के पदाधिकारी </span>
+                        </div>
+                        {/* /.info-box-content */}
+                    </div>
+                    {/* /.info-box */}
+                    </div>
+                   
+                </div>
+                <div className="row">
+                    <div className="col-12 col-sm-6 col-md-3">
+                    <div className="info-box" onClick={() => navigate("/layout/"+"photo")}>
+                        <div className="info-box-content">
+                        <span className="info-box-text" style={{textAlign:"center"}}>फोटो</span>
                         </div>
                         {/* /.info-box-content */}
                     </div>
                     {/* /.info-box */}
                     </div>
                     {/* /.col */}
+                    <div className="col-12 col-sm-6 col-md-3">
+                    <div className="info-box mb-3" onClick={() => navigate("/layout/"+"video")}>
+                        <div className="info-box-content">
+                        <span className="info-box-text" style={{textAlign:"center"}}> वीडियो</span>
+                        </div>
+                        {/* /.info-box-content */}
+                    </div>
+                    {/* /.info-box */}
+                    </div>
+                    <div className="col-12 col-sm-6 col-md-3">
+                    <div className="info-box mb-3" onClick={() => navigate("/layout/"+"samachaar")}>
+                        <div className="info-box-content">
+                        <span className="info-box-text" style={{textAlign:"center"}}>समाज के मुख्य समाचार</span>
+                        </div>
+                        {/* /.info-box-content */}
+                    </div>
+                    {/* /.info-box */}
+                    </div>
+                    <div className="col-12 col-sm-6 col-md-3">
+                    <div className="info-box mb-3" onClick={() => navigate("/layout/"+"suchna")}>
+                        <div className="info-box-content">
+                        <span className="info-box-text" style={{textAlign:"center"}}>आवश्यक सुचना </span>
+                        </div>
+                        {/* /.info-box-content */}
+                    </div>
+                    {/* /.info-box */}
+                    </div>
+                   
                 </div>
-                
-                {/* /.row */}
+                <div className="row">
+                    <div className="col-12 col-sm-6 col-md-3">
+                    <div className="info-box">
+                        <div className="info-box-content">
+                        <span className="info-box-text" style={{textAlign:"center"}}>समाज का इतिहास</span>
+                        </div>
+                        {/* /.info-box-content */}
+                    </div>
+                    {/* /.info-box */}
+                    </div>
+                    {/* /.col */}
+                    <div className="col-12 col-sm-6 col-md-3">
+                    <div className="info-box mb-3" onClick={() => navigate("/layout/"+"nirman")}>
+                        <div className="info-box-content">
+                        <span className="info-box-text" style={{textAlign:"center"}} >शौर्य स्थल निर्माण समिति</span>
+                        </div>
+                        {/* /.info-box-content */}
+                    </div>
+                    {/* /.info-box */}
+                    </div>
+                    <div className="col-12 col-sm-6 col-md-3">
+                    <div className="info-box mb-3" onClick={() => navigate("/layout/master")}>
+                        <div className="info-box-content">
+                        <span className="info-box-text" style={{textAlign:"center"}}>मास्टर</span>
+                        </div>
+                        {/* /.info-box-content */}
+                    </div>
+                    {/* /.info-box */}
+                    </div>
+                   
+                </div>
                 </div>{/*/. container-fluid */}
             </section>
             {/* /.content */}

@@ -2,13 +2,12 @@ import React,{useState,useEffect} from 'react'
 import SideBar from '../components/Sidebar'
 import { firestore } from "../firebase.config";
 import { navigate } from "hookrouter";
-import { useFormik,useField} from "formik";
+import { useFormik} from "formik";
 
 function EditUser({id}) {
     // console.log("rno:",rno);
     const [dtypes,setdTypes] = useState([])
     const [val,setVal] = useState({})
-    const [allData, setAllData] = useState({})
     const [gaadiName,setGaadiName] = useState([]);
     const [villageName,setVillageName] = useState([])
     
@@ -25,7 +24,7 @@ function EditUser({id}) {
           setdTypes(dt)
       },[]);
 
-    useEffect(async () => {
+    useEffect(() => {
         loadUserData()
         loadGaadis()
         console.log("val",val);
@@ -122,9 +121,14 @@ function EditUser({id}) {
         enableReinitialize: true,
         validate,
         onSubmit:(values) => {
+            // console.log(values);
+            // console.log("val rec",val);
             const uid = val.uid
-            if(values.type === "ghoshna")
+            if(values.type === "ghoshna"){
                 values.reciept_no = "";
+                values.ntp = ""
+            }
+                
             const user_data = {
                 address : values.address,
                 fname: values.fname,
@@ -296,7 +300,9 @@ function EditUser({id}) {
                                             />
                                          </div>
                                             {newFormik.errors.reciept_no ? (<p style={{color:"red"}}>{ newFormik.errors.reciept_no}</p>) : null}
-                                     </div>}
+                                     </div>
+                                     
+                                     }
                                         
                                         <div className="col-sm-6">
                                         <div className="form-group">

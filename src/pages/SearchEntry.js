@@ -132,8 +132,8 @@ export default function SearchEntry() {
                                 <th>Reciept Number</th>
                                 <th>Name to be Printed</th>
                                 <th>Note</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
+                                {/* <th>Edit</th>
+                                <th>Delete</th> */}
                               </tr>
                             </thead>
                             <tbody>
@@ -157,20 +157,22 @@ export default function SearchEntry() {
                                   {val.ntp ? <td>{val.ntp}</td> : <td>-</td>}
                                   {val.note ? <td>{val.note}</td> : <td>-</td>}
                                   {/* <A href="/editUser" val = {val}><td style={{color:"blue"}}>Edit</td></A> */}
-                                  <td
+                                  <td style = {{flexDirection:"row"}}>
+                                  <span
                                     onClick={() =>
                                       navigate("/editUser/" + val.id)
                                     }
                                     style={{ color: "blue" }}
                                   >
-                                    Edit
-                                  </td>
+                                  <i className="fas fa-edit" style={{color:"black"}}></i>
+                                  </span>
                                   {/* <td onClick={() => edit(val)} style={{color:"blue"}}>Edit</td> */}
-                                  <td
+                                  <span
                                     onClick={() => deleteUser(val.reciept_no)}
                                     style={{ color: "blue" }}
                                   >
-                                    Delete
+                                      <i className="fas fa-trash" style={{color:"red"}}></i>
+                                    </span>
                                   </td>
                                 </tr>
                               ))}

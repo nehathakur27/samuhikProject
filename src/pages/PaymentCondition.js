@@ -9,7 +9,7 @@ import Received from "../components/Received";
 export default function Payment() {
   const [dtypes, setdTypes] = useState([]);
   const [ptype, setPType] = useState("");
-  let ref = firestore.collection("receipts").doc("AllReceipts");
+  let ref = firestore.collection("receipts").doc("AllsReceipts");
 
   useEffect(async () => {
     if (localStorage.getItem("logged") !== "true") {
