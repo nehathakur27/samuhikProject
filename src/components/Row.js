@@ -1,4 +1,4 @@
-import { firestore } from "../firebase.config";
+import { firestore } from "../firebase";
 import React, { useEffect, useState } from "react";
 
 export default function Row({ gname }) {

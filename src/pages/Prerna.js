@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import SideBar from "../components/Sidebar";
 import { useFormik } from "formik";
 import { v4 as uuidv4 } from "uuid";
-import { firestore, storage } from "../firebase.config";
+import { firestore, storage } from "../firebase";
 import { navigate } from "hookrouter";
 
 const Prerna = () => {

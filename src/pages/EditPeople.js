@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/Sidebar";
 import { useFormik } from "formik";
-import { firestore, storage } from "../firebase.config";
+import { firestore, storage } from "../firebase";
 import { navigate } from "hookrouter";
 
 export default function EditPeople({ id }) {

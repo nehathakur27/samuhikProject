@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { navigate } from "hookrouter";
-import { firestore, storage } from "../firebase.config";
+import { firestore, storage } from "../firebase";
 import ReactPlayer from "react-player";
 
 export default function ShowMedia({ type }) {

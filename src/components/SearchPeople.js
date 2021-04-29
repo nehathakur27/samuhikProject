@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { navigate } from "hookrouter";
-import { firestore, storage } from "../firebase.config";
+import { firestore, storage } from "../firebase";
 import { isDOMComponentElement } from "react-dom/test-utils";
 
 export default function SearchPeople({ type }) {

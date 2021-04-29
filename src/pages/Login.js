@@ -1,6 +1,6 @@
 import React from 'react'
 import { useFormik,} from "formik";
-import { firestore } from "../firebase.config";
+import { firestore } from "../firebase";
 import { navigate } from "hookrouter";
 
 function Login(){

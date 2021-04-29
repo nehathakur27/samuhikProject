@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { firestore } from "../firebase.config";
+import { firestore } from "../firebase";
 import { navigate } from "hookrouter";
 import { useFormik } from "formik";
 

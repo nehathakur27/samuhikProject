@@ -5,7 +5,7 @@ import NameSearch from "../components/NameSearch";
 import RegNoSearch from "../components/RegNoSearch";
 // import _, { object } from 'underscore'
 import { navigate } from "hookrouter";
-import { firestore } from "../firebase.config";
+import { firestore } from "../firebase";
 import EditUser from "../pages/EditUser";
 
 export default function SearchEntry() {

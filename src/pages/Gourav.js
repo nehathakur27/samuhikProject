@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import SideBar from "../components/Sidebar";
 import { useFormik } from "formik";
 import { navigate } from "hookrouter";
-import { firestore, storage } from "../firebase.config";
+import { firestore, storage } from "../firebase";
 import { v4 as uuidv4 } from "uuid";
 
 const Gourav = () => {
