@@ -20,7 +20,7 @@
 
 
 # web
-web/firebase-config.js
+src/firebase-config.js
 
 npm-debug.log*
 yarn-debug.log*
