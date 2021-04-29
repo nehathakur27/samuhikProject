@@ -96,7 +96,6 @@ const Reports = () => {
                     <option value="pro">Product</option>
                   </select>
                 </div>
-
                 {type === "place" && (
                   <GVSearch parentCallback={handleCallback} />
                 )}
@@ -106,64 +105,64 @@ const Reports = () => {
                 {type === "pro" && (
                   <ProductSearch parentCallback={handleCallback} />
                 )}
-
-                {finalData.length > 0 && (
-                  <div className="row">
-                    <div className="col-12">
-                      <div className="card">
-                        <div className="card-body">
-                          <table
-                            id="example2"
-                            className="table table-bordered table-hover"
-                          >
-                            <thead>
-                              <tr>
-                                <th>Name</th>
-                                <th>Father's Name</th>
-                                <th>Address</th>
-                                <th>Village Name</th>
-                                <th>Gaadi Name</th>
-                                <th>Mobile Number</th>
-                                <th>Donation For</th>
-                                <th>Payment type</th>
-                                <th>Date</th>
-                                <th>Amount</th>
-                                <th>Reciept Number</th>
-                                <th>Name to be Printed</th>
-                                <th>Note</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {finalData.map((val) => (
-                                <tr>
-                                  <td>{val.v.name}</td>
-                                  <td>{val.v.fname}</td>
-                                  <td>{val.v.address}</td>
-                                  <td>{val.v.vname}</td>
-                                  <td>{val.v.gname}</td>
-                                  <td>{val.v.mnno}</td>
-                                  <td>{val.donation}</td>
-                                  <td>{val.type}</td>
-                                  <td>{val.date}</td>
-                                  <td>{val.amount}</td>
-                                  {val.reciept_no ? (
-                                    <td>{val.reciept_no}</td>
-                                  ) : (
-                                    <td>-</td>
-                                  )}
-                                  {val.ntp ? <td>{val.ntp}</td> : <td>-</td>}
-                                  {val.note ? <td>{val.note}</td> : <td>-</td>}
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
+
+            {finalData.length > 0 && (
+              <div className="row">
+                <div className="col-12">
+                  {/* <div className="card">
+                    <div className="card-body"> */}
+                      <table
+                        id="example2"
+                        className="table table-bordered table-hover"
+                      >
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Father's Name</th>
+                            <th>Address</th>
+                            <th>Village Name</th>
+                            <th>Gaadi Name</th>
+                            <th>Mobile Number</th>
+                            <th>Donation For</th>
+                            <th>Payment type</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Reciept Number</th>
+                            <th>Name to be Printed</th>
+                            <th>Note</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {finalData.map((val) => (
+                            <tr>
+                              <td>{val.v.name}</td>
+                              <td>{val.v.fname}</td>
+                              <td>{val.v.address}</td>
+                              <td>{val.v.vname}</td>
+                              <td>{val.v.gname}</td>
+                              <td>{val.v.mnno}</td>
+                              <td>{val.donation}</td>
+                              <td>{val.type}</td>
+                              <td>{val.date}</td>
+                              <td>{val.amount}</td>
+                              {val.reciept_no ? (
+                                <td>{val.reciept_no}</td>
+                              ) : (
+                                <td>-</td>
+                              )}
+                              {val.ntp ? <td>{val.ntp}</td> : <td>-</td>}
+                              {val.note ? <td>{val.note}</td> : <td>-</td>}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    {/* </div>
+                  </div> */}
+                </div>
+              </div>
+            )}
           </div>
         </section>
       </div>

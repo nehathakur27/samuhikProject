@@ -117,11 +117,11 @@ export default function SearchEntry() {
                 {finalData.length > 0 && (
                   <div className="row">
                     <div className="col-12">
-                      <div className="card">
+                      {/* <div className="card">
                         <div className="card-header">
                           <h3 className="card-title">Details</h3>
                         </div>
-                        <div className="card-body">
+                        <div className="card-body"> */}
                           <table id="example2" className="table table-bordered">
                             <thead>
                               <tr>
@@ -184,8 +184,8 @@ export default function SearchEntry() {
                               ))}
                             </tbody>
                           </table>
-                        </div>
-                      </div>
+                        {/* </div>
+                      </div> */}
                     </div>
                   </div>
                 )}

@@ -40,7 +40,7 @@ const PaymentSearch = (props) => {
                 props.parentCallback(usersData,recData)
             }else if(searched &&( usersData.length === 0 || recData.length === 0)){
                 props.parentCallback(usersData,recData)
-                alert("No data found")
+                // alert("No data found")
             }
     }
 

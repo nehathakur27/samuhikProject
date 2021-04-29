@@ -59,7 +59,7 @@ const GVSearch = (props) => {
                 props.parentCallback(usersData,recData)
             }else if( usersData.length === 0 || recData.length === 0){
                 props.parentCallback(usersData,recData)
-                alert("No data found")
+                // alert("No data found")
 
             }
     }
