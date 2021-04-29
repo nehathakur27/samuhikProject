@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import { navigate } from "hookrouter";
 import Gourav from "../pages/Gourav";
 import MaargDarshan from "../pages/MaargDarshan";
 import Master from "../pages/Master";
@@ -16,6 +17,12 @@ import ShowMedia from "./ShowMedia";
 import SideBar from "./Sidebar";
 
 const Layout = ({ type }) => {
+  useEffect(() => {
+    if (localStorage.getItem("logged") !== "true") {
+      navigate("/");
+    }
+  }, []);
+
   const components = {
     prerna: Prerna,
     gourav: Gourav,
@@ -42,7 +49,7 @@ const Layout = ({ type }) => {
     samachaar: "समाचार ",
     suchna: "सुचना",
     nirman: "निर्माण",
-    master:"मास्टर",
+    master: "मास्टर",
   };
   const CurrentComponent = components[type.type];
   return (

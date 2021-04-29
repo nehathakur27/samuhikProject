@@ -1,25 +1,29 @@
-import React,{useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import { firestore } from "../firebase.config";
 import { navigate } from "hookrouter";
 import { v4 as uuidv4 } from "uuid";
 import { useFormik } from "formik";
 
 export default function Ghoshna(props) {
-    const [dtype,setdTypes] = useState([])
+  const [dtype, setdTypes] = useState([]);
 
-    useEffect(async () => {
-        if (localStorage.getItem("logged") !== "true") {
-          navigate("/");
-        }
-        const document = firestore.collection("donation_type");
-        const activeRef = await document.get();
-        var dt = [];
-        activeRef.forEach((docs) => {
-          dt.push(docs.data());
-        });
-    
-        setdTypes(dt);
+  useEffect(() => {
+    if (localStorage.getItem("logged") !== "true") {
+      navigate("/");
+    }
+    fetchData();
+  });
+
+  const fetchData = async () => {
+    const document = firestore.collection("donation_type");
+    const activeRef = await document.get();
+    var dt = [];
+    activeRef.forEach((docs) => {
+      dt.push(docs.data());
     });
+
+    setdTypes(dt);
+  };
 
   const validate = (values) => {
     const errors = {};

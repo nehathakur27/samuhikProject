@@ -7,7 +7,7 @@ import GaadiMaster from "../components/GaadiMaster";
 export default function Master() {
   const [category, setCategory] = useState();
 
-  useEffect(async () => {
+  useEffect(() => {
     if (localStorage.getItem("logged") !== "true") {
       navigate("/");
     }

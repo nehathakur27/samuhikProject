@@ -9,10 +9,14 @@ export default function DonationMaster() {
   const [showResult, setShowResult] = useState(false);
   const [showForm, setShowForm] = useState(false);
 
-  useEffect(async () => {
+  useEffect(() => {
     if (localStorage.getItem("logged") !== "true") {
       navigate("/");
     }
+    fetchData()
+  });
+
+  const fetchData = async () => {
     const document = firestore.collection("donation_type");
     const activeRef = await document.get();
     var dt = [];
@@ -22,7 +26,7 @@ export default function DonationMaster() {
 
     setdTypes(dt);
     setShowResult(true);
-  });
+  };
 
   const changeState = () => {
     console.log("changinhg");
@@ -38,9 +42,7 @@ export default function DonationMaster() {
     });
     // console.log(data);
     setShowResult(data);
-    const query = firestore
-      .collection("donation_type")
-      .where("id", "==", id);
+    const query = firestore.collection("donation_type").where("id", "==", id);
     const exe = query.get().then(function (q) {
       q.forEach(function (doc) {
         doc.ref.delete();

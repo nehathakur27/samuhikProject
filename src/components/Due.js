@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { firestore } from "../firebase.config";
 import { navigate } from "hookrouter";
 import { v4 as uuidv4 } from "uuid";
@@ -7,10 +7,14 @@ import { useFormik } from "formik";
 export default function Due() {
   const [dtype, setdTypes] = useState([]);
 
-  useEffect(async () => {
+  useEffect(() => {
     if (localStorage.getItem("logged") !== "true") {
       navigate("/");
     }
+    fetchData();
+  });
+
+  const fetchData = async () => {
     const document = firestore.collection("donation_type");
     const activeRef = await document.get();
     var dt = [];
@@ -19,7 +23,7 @@ export default function Due() {
     });
 
     setdTypes(dt);
-  });
+  };
 
   const validate = (values) => {
     const errors = {};

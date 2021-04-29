@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/Sidebar";
 import { useFormik } from "formik";
-import { v4 as uuidv4 } from "uuid";
 import { firestore, storage } from "../firebase.config";
 import { navigate } from "hookrouter";
 
@@ -104,7 +103,7 @@ export default function EditPeople({ id }) {
       if ("date" in userData) data["date"] = values.date;
       if ("note" in userData) data["note"] = values.note;
       console.log("data edited", data);
-      
+
       firestore
         .collection(userType)
         .doc(userId)

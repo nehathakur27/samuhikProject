@@ -5,7 +5,7 @@ import { isDOMComponentElement } from "react-dom/test-utils";
 
 export default function SearchPeople({ type }) {
   const [finalData, setFinalData] = useState([]);
-  const[key,setKeys] = useState([])
+  const [key, setKeys] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,17 +30,15 @@ export default function SearchPeople({ type }) {
   }, []);
 
   const deleteUser = (id) => {
-    var data = [] 
+    var data = [];
     finalData.map((d) => {
-        if(d.pid !== id){
-            data.push(d)
-        }
-    })
+      if (d.pid !== id) {
+        data.push(d);
+      }
+    });
     // console.log(data);
-    setFinalData(data)
-    const query = firestore
-      .collection(type)
-      .where("pid", "==", id);
+    setFinalData(data);
+    const query = firestore.collection(type).where("pid", "==", id);
     const exe = query.get().then(function (q) {
       q.forEach(function (doc) {
         doc.ref.delete();
@@ -56,15 +54,33 @@ export default function SearchPeople({ type }) {
           <table id="example2" className="table table-bordered">
             <thead>
               <tr>
-                {finalData.some(obj => obj.hasOwnProperty("event")) && <th>Event</th>}
-                {finalData.some(obj => obj.hasOwnProperty("note")) &&<th>Note</th>}
-                {finalData.some(obj => obj.hasOwnProperty("date")) &&<th>Date</th>}
-                {finalData.some(obj => obj.hasOwnProperty("image")) && <th>Image</th>}
-                {finalData.some(obj => obj.hasOwnProperty("name")) && <th>Name</th>}
-                {finalData.some(obj => obj.hasOwnProperty("fname")) &&<th>Father's Name</th>}
-                {finalData.some(obj => obj.hasOwnProperty("address")) &&<th>Address</th>}
-                {finalData.some(obj => obj.hasOwnProperty("mno")) && <th>Mobile Number</th>}
-                {finalData.some(obj => obj.hasOwnProperty("vivran")) &&<th>Vivran</th>}
+                {finalData.some((obj) => obj.hasOwnProperty("event")) && (
+                  <th>Event</th>
+                )}
+                {finalData.some((obj) => obj.hasOwnProperty("note")) && (
+                  <th>Note</th>
+                )}
+                {finalData.some((obj) => obj.hasOwnProperty("date")) && (
+                  <th>Date</th>
+                )}
+                {finalData.some((obj) => obj.hasOwnProperty("image")) && (
+                  <th>Image</th>
+                )}
+                {finalData.some((obj) => obj.hasOwnProperty("name")) && (
+                  <th>Name</th>
+                )}
+                {finalData.some((obj) => obj.hasOwnProperty("fname")) && (
+                  <th>Father's Name</th>
+                )}
+                {finalData.some((obj) => obj.hasOwnProperty("address")) && (
+                  <th>Address</th>
+                )}
+                {finalData.some((obj) => obj.hasOwnProperty("mno")) && (
+                  <th>Mobile Number</th>
+                )}
+                {finalData.some((obj) => obj.hasOwnProperty("vivran")) && (
+                  <th>Vivran</th>
+                )}
                 <th>Edit</th>
                 <th>Delete</th>
               </tr>
@@ -75,9 +91,14 @@ export default function SearchPeople({ type }) {
                   {val.event && <td>{val.event}</td>}
                   {val.note && <td>{val.note}</td>}
                   {val.date && <td>{val.date}</td>}
-                  {val.image && <td>
-                    <img src={val.image} style={{ width: 180, height: 180 }} />
-                  </td>}
+                  {val.image && (
+                    <td>
+                      <img
+                        src={val.image}
+                        style={{ width: 180, height: 180 }}
+                      />
+                    </td>
+                  )}
                   {val.name && <td>{val.name}</td>}
                   {val.fname && <td>{val.fname}</td>}
                   {val.address && <td>{val.address}</td>}
@@ -85,7 +106,9 @@ export default function SearchPeople({ type }) {
                   {val.vivran && <td>{val.vivran}</td>}
                   <td style={{ flexDirection: "row" }}>
                     <span
-                      onClick={() => navigate("/editPeople/"+type+"*"+ val.pid)}
+                      onClick={() =>
+                        navigate("/editPeople/" + type + "*" + val.pid)
+                      }
                       style={{ color: "blue" }}
                     >
                       <i className="fas fa-edit" style={{ color: "black" }}></i>

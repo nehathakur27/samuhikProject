@@ -12,6 +12,12 @@ export default function SearchEntry() {
   const [type, setType] = useState("");
   const [finalData, setFinalData] = useState([]);
 
+  useEffect(() => {
+    if (localStorage.getItem("logged") !== "true") {
+      navigate("/");
+    }
+  }, []);
+
   const handleChange = (event) => {
     setType(event.target.value);
   };

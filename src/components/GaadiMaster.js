@@ -7,6 +7,7 @@ import Row from "../components/Row";
 
 export default function GaadiMaster() {
   const [gName, setgName] = useState([]);
+  const [allGaadis, setAllGaadis] = useState([]);
   const [showResult, setShowResult] = useState(false);
   const [showForm, setShowForm] = useState(false);
 
@@ -19,17 +20,19 @@ export default function GaadiMaster() {
   }, []);
 
   useEffect(() => {
-    // console.log("gname",JSON.stringify(gName));
-    // console.log("vname",JSON.stringify(vName));
     console.log("gname", gName);
-    // console.log("vname", vName);
-    // vName.map((g, i) => {
-    //   // console.log(g[0]);
-    //   g.map((v,j) => {
-    //     console.log(v.name);
-    //   })
-    // });
   }, [gName]);
+
+  const loadGaadis = async () => {
+    const document = firestore.collection("gaadi_name");
+    const activeRef = await document.get();
+    var gaadis = [];
+    activeRef.forEach((docs) => {
+      gaadis.push(docs.data());
+    });
+    console.log("all gaadis", gaadis);
+    setAllGaadis(gaadis);
+  };
 
   const loadData = async () => {
     var data = [];
@@ -49,15 +52,17 @@ export default function GaadiMaster() {
 
   const changeState = () => {
     console.log("changing");
+    if (showForm === false && allGaadis.length === 0) loadGaadis();
     setShowForm(!showForm);
   };
 
-  
-
   const validate = (values) => {
     const errors = {};
-    if (!values.name) {
-      errors.name = "Name Required";
+    if (values.gname === "None" && !values.name) {
+      errors.name = "Gaadi Name Required";
+    }
+    if (values.gname !== "None" && !values.vname) {
+      errors.vname = "Village Name Required";
     }
 
     return errors;
@@ -66,24 +71,38 @@ export default function GaadiMaster() {
     initialValues: {
       id: "",
       name: "",
+      gname: "",
+      vname: "",
     },
     validate,
     onSubmit: (values) => {
       console.log(values);
-      let id = uuidv4();
-      const data = {
-        id: id,
-        name: values.name,
-      };
-      console.log(data);
-      firestore
-        .collection("gaadi_name")
-        .doc(id)
-        .set(data, { merge: true })
-        .then(function () {
-          console.log("success");
-          navigate("/home");
-        });
+      var data = {};
+      if (values.gname === "None") {
+        data["name"] = values.name;
+        data["id"] = values.name;
+        firestore
+          .collection("gaadi_name")
+          .doc(values.name)
+          .set(data, { merge: true })
+          .then(function () {
+            console.log("success");
+            navigate("/home");
+          });
+      }
+      if (values.gname !== "None") {
+        data["name"] = data["id"] = values.vname;
+        firestore
+          .collection("gaadi_name")
+          .doc(values.gname)
+          .collection("village_name")
+          .doc(values.vname)
+          .set(data, { merge: true })
+          .then(function () {
+            console.log("success");
+            navigate("/home");
+          });
+      }
     },
   });
 
@@ -99,11 +118,9 @@ export default function GaadiMaster() {
                 <th>Delete</th>
               </tr>
             </thead>
-            <tbody>
               {gName.map((val, i) => (
                 <Row gname={val} />
               ))}
-            </tbody>
           </table>
 
           <div
@@ -128,20 +145,58 @@ export default function GaadiMaster() {
             <div className="row">
               <div className="col-sm-6">
                 <div className="form-group">
-                  <label>नाम </label>
-                  <input
-                    type="text"
+                  <label>गादी </label>
+                  <select
                     className="form-control"
-                    placeholder="नाम"
-                    name="name"
+                    name="gname"
+                    value={newFormik.values.gname}
                     onChange={newFormik.handleChange}
-                    value={newFormik.values.name}
-                  />
+                  >
+                    <option value="" disabled defaultValue="select">
+                      Select one
+                    </option>
+                    {allGaadis.map((gaadi) => (
+                      <option value={gaadi.id}>{gaadi.name}</option>
+                    ))}
+                    <option value="None">None</option>
+                  </select>
                 </div>
-                {newFormik.errors.name ? (
-                  <p style={{ color: "red" }}>{newFormik.errors.name}</p>
-                ) : null}
               </div>
+              {newFormik.values.gname === "None" && (
+                <div className="col-sm-6">
+                  <div className="form-group">
+                    <label>गादी का नाम </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="नाम"
+                      name="name"
+                      onChange={newFormik.handleChange}
+                      value={newFormik.values.name}
+                    />
+                  </div>
+                  {newFormik.errors.name ? (
+                    <p style={{ color: "red" }}>{newFormik.errors.name}</p>
+                  ) : null}
+                </div>
+              )}
+              {newFormik.values.gname !== "None" && (
+                <div className="col-sm-6">
+                  <div className="form-group">
+                    <label>गांव का नाम </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="नाम"
+                      name="vname"
+                      onChange={newFormik.handleChange}
+                    />
+                  </div>
+                  {newFormik.errors.vname ? (
+                    <p style={{ color: "red" }}>{newFormik.errors.vname}</p>
+                  ) : null}
+                </div>
+              )}
             </div>
             <button type="submit" className="btn btn-info">
               सबमिट{" "}

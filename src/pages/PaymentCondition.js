@@ -11,10 +11,14 @@ export default function Payment() {
   const [ptype, setPType] = useState("");
   let ref = firestore.collection("receipts").doc("AllsReceipts");
 
-  useEffect(async () => {
+  useEffect(() => {
     if (localStorage.getItem("logged") !== "true") {
       navigate("/");
     }
+    fetchData()
+  });
+
+  const fetchData = async () => {
     const document = firestore.collection("donation_type");
     const activeRef = await document.get();
     var dt = [];
@@ -23,7 +27,7 @@ export default function Payment() {
     });
 
     setdTypes(dt);
-  });
+  };
 
   const handleType = (e) => {
     console.log(e.target.value);
@@ -69,7 +73,7 @@ export default function Payment() {
                 </div>
                 {ptype === "ghoshna" && <Ghoshna />}
 
-                {ptype === "due" && <Due  />}
+                {ptype === "due" && <Due />}
 
                 {ptype === "received" && <Received />}
               </div>

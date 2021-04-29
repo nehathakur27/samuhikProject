@@ -7,10 +7,14 @@ import { useFormik } from "formik";
 export default function Received() {
   const [dtype, setdTypes] = useState([]);
 
-  useEffect(async () => {
+  useEffect(() => {
     if (localStorage.getItem("logged") !== "true") {
       navigate("/");
     }
+    fetchData()
+  });
+
+  const fetchData = async () => {
     const document = firestore.collection("donation_type");
     const activeRef = await document.get();
     var dt = [];
@@ -19,7 +23,7 @@ export default function Received() {
     });
 
     setdTypes(dt);
-  });
+  }
 
   const validate = (values) => {
     const errors = {};
@@ -51,7 +55,6 @@ export default function Received() {
       amt: "",
       ntp: "",
       pm: "",
-      note: "",
     },
     validate,
     onSubmit: async (values) => {
